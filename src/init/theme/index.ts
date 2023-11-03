@@ -1,5 +1,7 @@
 import { createTheme } from '@mui/material/styles'
-import { text, primary, secondary } from './colors'
-import { getDesignTokens } from '@/init/theme/getDesignTokens'
+import { getDesignTokens } from './getDesignTokens'
 
-export const theme = createTheme(getDesignTokens('light'))
+export const createCustomTheme = (mode) => {
+  const designTokens = getDesignTokens(mode)
+  return createTheme(designTokens)
+}
