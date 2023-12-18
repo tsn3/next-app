@@ -1,21 +1,29 @@
 'use client'
+import { FC, ReactNode, useState } from 'react'
+import { Box, IconButton } from '@mui/material'
+import { Brightness4Outlined, Brightness7Outlined } from '@mui/icons-material'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+import { CacheProvider, EmotionCache } from '@emotion/react'
 import createCache from '@emotion/cache'
 import { useServerInsertedHTML } from 'next/navigation'
-import { CacheProvider } from '@emotion/react'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import { useState } from 'react'
-import { Box, IconButton } from '@mui/material'
-import Brightness4OutlinedIcon from '@mui/icons-material/Brightness4Outlined'
-import Brightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined'
 import { useCustomTheme } from '../hooks/useCustomTheme'
 
-export const ThemeRegistry = (props) => {
+interface ThemeRegistryProps {
+  options: EmotionCache
+  children: ReactNode
+}
+interface CacheState {
+  cache: EmotionCache
+  flush: () => string[]
+}
+
+export const ThemeRegistry: FC<ThemeRegistryProps> = (props) => {
   const { options, children } = props
 
   const { mode, toggleColorMode, theme } = useCustomTheme()
 
-  const [{ cache, flush }] = useState(() => {
+  const [{ cache, flush }] = useState<CacheState>(() => {
     const cache = createCache(options)
     cache.compat = true
     const prevInsert = cache.insert
@@ -68,15 +76,11 @@ export const ThemeRegistry = (props) => {
             justifyContent: 'flex-start',
             bgcolor: 'background.default',
             color: 'text.primary',
-            p: 3,
+            p: 10,
           }}
         >
           <IconButton onClick={toggleColorMode}>
-            {theme.palette.mode === 'dark' ? (
-              <Brightness4OutlinedIcon />
-            ) : (
-              <Brightness7OutlinedIcon />
-            )}
+            {theme.palette.mode === 'dark' ? <Brightness4Outlined /> : <Brightness7Outlined />}
           </IconButton>
           {mode === 'dark' ? 'Light mode' : 'Dark mode'}
         </Box>

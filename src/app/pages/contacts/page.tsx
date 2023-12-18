@@ -1,6 +1,7 @@
+import { FC } from 'react'
 import Link from 'next/link'
 
-export default function Page() {
+const Page: FC = () => {
   return (
     <>
       <h1>Contact: Jack</h1>
@@ -8,3 +9,5 @@ export default function Page() {
     </>
   )
 }
+
+export default Page

@@ -1,11 +1,12 @@
 'use client'
+import { FC } from 'react'
+import { Box, Typography } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
 
 import Home from '../../../../public/icons/home.svg'
-import { Box, Typography } from '@mui/material'
 
-export default function Page() {
+export const Page: FC = () => {
   return (
     <Box
       sx={{
@@ -31,3 +32,4 @@ export default function Page() {
     </Box>
   )
 }
+export default Page
