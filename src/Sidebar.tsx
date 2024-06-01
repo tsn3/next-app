@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, ReactElement, useState } from 'react'
 import { useCustomTheme } from './hooks/useCustomTheme'
 import {
   Box,
@@ -8,16 +8,25 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Toolbar,
   Typography,
 } from '@mui/material'
-import { Menu, ChevronLeft, ChevronRight, Inbox, Mail } from '@mui/icons-material'
+import {
+  Menu,
+  ChevronLeft,
+  ChevronRight,
+  InfoOutlined,
+  ContactPageOutlined,
+} from '@mui/icons-material'
 import { AppBar, DrawerHeader, Main, drawerWidth } from './styles'
+import Link from 'next/link'
+export interface SidebarProps {
+  children: ReactElement
+}
 
-export const Sidebar = (): FC => {
+export const Sidebar: FC<SidebarProps> = ({ children }): ReactElement => {
   const theme = useCustomTheme()
   const [open, setOpen] = useState(false)
 
@@ -68,18 +77,28 @@ export const Sidebar = (): FC => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{index % 2 === 0 ? <Inbox /> : <Mail />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+          <Link href='/about'>
+            <ListItem>
+              <ListItemIcon>
+                <InfoOutlined />
+              </ListItemIcon>
+              <ListItemText primary='About' />
             </ListItem>
-          ))}
+          </Link>
+
+          <Link href='/contacts' passHref>
+            <ListItem>
+              <ListItemIcon>
+                <ContactPageOutlined />
+              </ListItemIcon>
+              <ListItemText primary='Contacts' />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+        {children}
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         </Typography>

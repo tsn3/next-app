@@ -28,14 +28,14 @@ export const ThemeRegistry: FC<ThemeRegistryProps> = (props) => {
     cache.compat = true
     const prevInsert = cache.insert
     let inserted: string[] = []
-    cache.insert = (...args) => {
+    cache.insert = (...args): string | void => {
       const serialized = args[1]
       if (cache.inserted[serialized.name] === undefined) {
         inserted.push(serialized.name)
       }
       return prevInsert(...args)
     }
-    const flush = () => {
+    const flush = (): string[] => {
       const prevInserted = inserted
       inserted = []
       return prevInserted

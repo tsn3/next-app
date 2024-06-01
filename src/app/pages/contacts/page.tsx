@@ -5,7 +5,7 @@ const Page: FC = () => {
   return (
     <>
       <h1>Contact: Jack</h1>
-      <Link href='/'> Back home</Link>
+      <Link href='/'>Back home</Link>
     </>
   )
 }
